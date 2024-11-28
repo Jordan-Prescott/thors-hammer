@@ -1,35 +1,34 @@
-from typing import Optional
-
-from ..base_command import BroadworksCommand
+from typing import Any, Dict
 
 
-class UserChargeNumberModifyRequest(BroadworksCommand):
+class BroadworksCommand:
     """
-    Represents the `UserChargeNumberModifyRequest` command.
+    Base class for all BroadWorks commands.
 
-    This command modifies the charge number settings for a user.
-
-    Args:
-        user_id (str): The user ID associated with the charge number settings.
-        service_provider_id (Optional[str]): The service provider ID.
-        phone_number (Optional[str]): The charge phone number.
-        use_charge_number_for_enhanced_translations (Optional[bool]): Whether to use the charge number for enhanced translations.
-        send_charge_number_to_network (Optional[bool]): Whether to send the charge number to the network.
+    Attributes:
+        command (str): The name of the BroadWorks command.
+        params (Dict[str, Any]): Parameters for the command.
     """
 
-    def __init__(
-        self,
-        user_id: str,
-        service_provider_id: Optional[str] = None,
-        phone_number: Optional[str] = None,
-        use_charge_number_for_enhanced_translations: Optional[bool] = None,
-        send_charge_number_to_network: Optional[bool] = None,
-    ) -> None:
-        super().__init__(
-            "UserChargeNumberModifyRequest",
-            user_id=user_id,
-            service_provider_id=service_provider_id,
-            phone_number=phone_number,
-            use_charge_number_for_enhanced_translations=use_charge_number_for_enhanced_translations,
-            send_charge_number_to_network=send_charge_number_to_network,
-        )
+    def __init__(self, command: str, **kwargs: Any) -> None:
+        """
+        Initialize the command with a name and parameters.
+
+        Args:
+            command (str): The name of the BroadWorks command.
+            **kwargs: Arbitrary keyword arguments representing command parameters.
+        """
+        self.command: str = command
+        self.params: Dict[str, Any] = kwargs
+
+    def to_dict(self) -> Dict[str, Any]:
+        """
+        Convert the command into a dictionary format.
+
+        Returns:
+            Dict[str, Any]: A dictionary containing the command and its parameters.
+        """
+        return {
+            "command": self.command,
+            "params": {k: v for k, v in self.params.items() if v is not None},
+        }
