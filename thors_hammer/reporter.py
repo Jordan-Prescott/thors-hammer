@@ -1,6 +1,6 @@
 from .api import API
 
 
-class Scripter:
+class Reporter:
     def __init__(self, api: API):
         self.api = api

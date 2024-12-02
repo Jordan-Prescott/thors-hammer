@@ -8,7 +8,7 @@ class UserChargeNumberModifyRequest(BroadworksCommand):
 
     Modifies the charge number settings for a user.
 
-    Attributes:
+    Args:
         user_id (str): The user ID associated with the charge number settings.
         service_provider_id (Optional[str]): The service provider ID.
         phone_number (Optional[str]): The charge phone number.
