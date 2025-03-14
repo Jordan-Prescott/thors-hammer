@@ -6,7 +6,7 @@ class API:
     Wrapper around BroadworksAPI to enhance usability and provide additional features.
     """
 
-    def __init__(self, host, username, password, port=2208, logger=None, **kwargs):
+    def __init__(self, host, username, password, port=2209, logger=None, **kwargs):
         """
         Initialize the wrapper with the required connection details.
 
@@ -26,7 +26,7 @@ class API:
             logger=logger,
             **kwargs,
         )
-        self.api.configure_logger()
+        self.logger = logger
 
     def authenticate(self):
         """
@@ -62,32 +62,6 @@ class API:
 
         return self.api.command(command_instance.command, **command_instance.params)
 
-    def send_raw_command(self, command, **kwargs):
-        """
-        Send a raw command directly to the OCI-P server.
-
-        Args:
-            command (str): The command name as a string.
-            **kwargs: The parameters for the command.
-
-        Returns:
-            Response: The response object from the server.
-        """
-        return self.api.command(command, **kwargs)
-
-    def build_command(self, command_name, **kwargs):
-        """
-        Dynamically build and send a command to the server.
-
-        Args:
-            command_name (str): The name of the command to execute.
-            **kwargs: Parameters for the command.
-
-        Returns:
-            Response: The response object from the server.
-        """
-        return self.api.command(command_name, **kwargs)
-
     def is_authenticated(self):
         """
         Check if the connection is authenticated.
@@ -102,27 +76,6 @@ class API:
         Open a connection to the OCI-P server.
         """
         self.api.connect()
-
-    def receive_response(self):
-        """
-        Receive and decode the response from the server.
-
-        Returns:
-            Response: The response object from the server.
-        """
-        return self.api.receive_response()
-
-    def decode_xml(self, xml):
-        """
-        Decode raw XML into a BroadWorks command object.
-
-        Args:
-            xml (str): The raw XML string.
-
-        Returns:
-            object: The OCICommand object.
-        """
-        return self.api.decode_xml(xml)
 
     def send_command(self, command, **kwargs):
         """
