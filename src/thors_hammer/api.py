@@ -26,7 +26,7 @@ class API:
             logger=logger,
             **kwargs,
         )
-        self.logger = logger
+        self.logger = self.api.logger
 
     def authenticate(self):
         """
@@ -62,6 +62,19 @@ class API:
 
         return self.api.command(command_instance.command, **command_instance.params)
 
+    def raw_command(self, command, **kwargs):
+        """
+        Send raw commands not using TH classes.
+
+        Args:
+            command (str): The command name.
+            **kwargs: The parameters for the command.
+
+        Returns:
+            None
+        """
+        return self.api.command(command, **kwargs)
+
     def is_authenticated(self):
         """
         Check if the connection is authenticated.
@@ -76,16 +89,3 @@ class API:
         Open a connection to the OCI-P server.
         """
         self.api.connect()
-
-    def send_command(self, command, **kwargs):
-        """
-        Build and send XML for a command and its parameters.
-
-        Args:
-            command (str): The command name.
-            **kwargs: The parameters for the command.
-
-        Returns:
-            None
-        """
-        self.api.send_command(command, **kwargs)
